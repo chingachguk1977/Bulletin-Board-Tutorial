@@ -184,9 +184,15 @@ CKEDITOR_CONFIGS = {
 }
 
 # Celery & Redis
-CELERY_BROKER_URL = f'redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/0'
+REDIS_URL = os.getenv('REDIS_URL')
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_DB = os.getenv('REDIS_DB')
+
+
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 broker_transport_options = {'visibility_timeout': 3600}
-result_backend = f'redis://{os.getenv("REDIS_HOST")}:{os.getenv("REDIS_PORT")}/0'
+result_backend = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 accept_content = ['application/json']
 task_serializer = 'json'
 RESULT_SERIALIZER = 'json'
