@@ -144,7 +144,6 @@ MEDIA_ROOT = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Mail.ru
 EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST = 'smtp.mail.ru'
@@ -155,7 +154,6 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 60
 
-
 # Allauth
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -165,7 +163,6 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 DEFAULT_FROM_EMAIL = EMAIL
 LOGIN_REDIRECT_URL = '/'
-
 
 # CKEditor
 CKEDITOR_UPLOAD_PATH = 'uploads/'
@@ -188,7 +185,6 @@ REDIS_URL = os.getenv('REDIS_URL')
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 REDIS_DB = os.getenv('REDIS_DB')
-
 
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
 broker_transport_options = {'visibility_timeout': 3600}
