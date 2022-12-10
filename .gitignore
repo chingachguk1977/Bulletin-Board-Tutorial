@@ -6,3 +6,4 @@ venv/
 /celerybeat-schedule.dir
 /cache_files/
 /celerybeat-schedule
+db.sqlite3

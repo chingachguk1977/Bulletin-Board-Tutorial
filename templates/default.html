@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/">
     <link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon.ico">
-    {% load static %}
+{% load static %}
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <style>
@@ -67,6 +67,7 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
   </head>
+
   <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <span class="text-navbar-brand text-info col-md-3 col-lg-2 me-0 px-3 fs-6">
@@ -97,7 +98,7 @@
                           <span class="align-text-bottom">Home</span>
                       </a>
                   </li>
-                  {% if request.user.is_authenticated and request.user.is_staff and is_email_verified %}
+                  {% if request.user.is_superuser or request.user.is_authenticated and request.user.is_staff and is_email_verified %}
                       <li class="nav-item">
                           <a class="nav-link" aria-current="page" href="{% url 'bill_board:create' %}">
                               <span class="align-text-bottom">New Ad</span>
@@ -113,6 +114,13 @@
                               <span class="align-text-bottom">Responses</span>
                           </a>
                       </li>
+                        {% if request.user.is_superuser%}
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://127.0.0.1:8000/admin">
+                                    <span class="align-text-bottom">Admin Panel</span>
+                                </a>
+                            </li>
+                        {% endif %}
                   {% endif %}
               </ul>
           </div>

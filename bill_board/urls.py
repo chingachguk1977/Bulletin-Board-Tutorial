@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (AdvertView, AdvertEdit, AdvertDetail, AdvertDelete, AdvertCreate,
-                    UserAdvert, RespList, resp_change_status, delete_response, )
+                    UserAdvert, RespList, resp_change_status, delete_response, RespCreate, )
 
 app_name = 'bill_board'
 urlpatterns = [

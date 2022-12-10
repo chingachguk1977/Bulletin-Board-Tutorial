@@ -17,7 +17,7 @@ class AdvertView(ListView):
     ordering = '-pk'
     context_object_name = 'advert'
     template_name = 'advertising.html'
-    paginate_by = 5
+    paginate_by = 3
 
 
 class AdvertDetail(FormMixin, DetailView):
@@ -46,7 +46,7 @@ class AdvertEdit(PostOwnerRequiredMixin, UpdateView):
     template_name = 'edit.html'
 
 
-class AdvertDelete(AdvertOwnerRequiredMixin, DeleteView):
+class AdvertDelete(PostOwnerRequiredMixin, DeleteView):
     """Author only"""
     model = Advert
     success_url = reverse_lazy('bill_board:advert')
@@ -69,6 +69,8 @@ class UserAdvert(LoginRequiredMixin, ListView):
     """Authorized user only"""
     template_name = 'advertising.html'
     context_object_name = 'advert'
+    ordering = '-pk'
+    paginate_by = 3
 
     def get_queryset(self):
         user = get_object_or_404(User, id=self.request.user.id)
@@ -80,6 +82,8 @@ class RespList(LoginRequiredMixin, ListView):
     """Authorized user only"""
     context_object_name = 'responses'
     template_name = 'response_list.html'
+    ordering = '-pk'
+    paginate_by = 3
 
     def get_queryset(self):
         """

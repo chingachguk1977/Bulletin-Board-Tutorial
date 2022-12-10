@@ -10,6 +10,8 @@ from Board.settings import SITE_LINK
 from .utilites import send_mail
 from .models import User, Advert
 
+from kombu.exceptions import OperationalError
+
 
 @shared_task
 def mail_for_add_response(username, email, title):
@@ -25,7 +27,10 @@ def mail_for_add_response(username, email, title):
     )
 
     subject = f'{username}, a new response to "{title}" received.'
-    send_mail(email, subject, html_content)
+    try:
+        send_mail(email, subject, html_content)
+    except OperationalError:
+        print('could not send email')
     # return
 
 

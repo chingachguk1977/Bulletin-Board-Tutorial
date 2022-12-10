@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404
 from .models import Resp, Advert
 from .tasks import mail_for_add_response, mail_for_change_status
 
+from kombu.exceptions import OperationalError
+
 
 @receiver(email_confirmed)
 def email_confirmed_(request, email_address, **kwargs):
@@ -25,16 +27,21 @@ def add_response(sender, instance, created, *args, **kwargs):
 
     if created:
         adv = get_object_or_404(Advert, pk=instance.post_id)
-        mail_for_add_response.apply_async(
-            (adv.author.username, adv.author.email, adv.title),
-            countdown=20,
-        )
-    # Adding the task to send email on response accepted
+        try:
+            mail_for_add_response.apply_async(
+                (adv.author.username, adv.author.email, adv.title),
+                countdown=20,
+            )
+        except OperationalError as e:
+            print(f'could not send email, this is why: {e}')
+        # Adding the task to send email on response accepted
 
     elif kwargs.get('update_fields'):
-        mail_for_change_status.apply_async(
-            (instance.author.username, instance.author.email),
-            countdown=20,
-        )
-
+        try:
+            mail_for_change_status.apply_async(
+                (instance.author.username, instance.author.email),
+                countdown=20,
+            )
+        except OperationalError as e:
+            print(f'could not send email, this is why: {e}')
     # return
