@@ -11,8 +11,8 @@ from .tasks import mail_for_add_response, mail_for_change_status
 
 @receiver(email_confirmed)
 def email_confirmed_(request, email_address, **kwargs):
-    """По факту подтверждения email делаем пользователя активным
-    и выдаем права staff - нужно для загрузки файлов в ckeditor"""
+    # Once e-mail is verified, the user is activated and assigned staff (needed for uploading files to ckeditor)
+
     user = User.objects.get(email=email_address.email)
     user.is_staff = True
     user.is_active = True
@@ -21,18 +21,20 @@ def email_confirmed_(request, email_address, **kwargs):
 
 @receiver(post_save, sender=Resp)
 def add_response(sender, instance, created, *args, **kwargs):
-    # Добавляем задание на отпраку письма по факту добавления отклика
+    # Adding the task to send email on response received
+
     if created:
-        adv_pk = instance.post_id
-        adv = get_object_or_404(Advert, pk=adv_pk)
+        adv = get_object_or_404(Advert, pk=instance.post_id)
         mail_for_add_response.apply_async(
             (adv.author.username, adv.author.email, adv.title),
-            countdown=30,
+            countdown=20,
         )
-    # Добавляем задание на отправку письма пр факту принятия отклика
+    # Adding the task to send email on response accepted
+
     elif kwargs.get('update_fields'):
         mail_for_change_status.apply_async(
             (instance.author.username, instance.author.email),
-            countdown=30,
+            countdown=20,
         )
-    return
+
+    # return

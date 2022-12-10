@@ -4,8 +4,7 @@ from django.core import mail
 from loguru import logger
 
 
-def send_mail(email: str, subject: str, html: any) -> None:
-    """Функция отправки почты"""
+def send_mail(email, subject, html):
     connection = None
     try:
         connection = mail.get_connection()
@@ -22,4 +21,4 @@ def send_mail(email: str, subject: str, html: any) -> None:
         logger.error(f'Task mailing added response :: {e}')
     finally:
         connection.close()
-    return
+    # return

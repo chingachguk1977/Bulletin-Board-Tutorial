@@ -4,7 +4,7 @@ from django.test import TestCase
 from bill_board.models import Advert, Resp
 
 
-class AdvertListViewTest(TestCase):
+class PostListViewTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):

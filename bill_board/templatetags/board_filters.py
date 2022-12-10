@@ -4,6 +4,6 @@ register = template.Library()
 
 
 @register.filter()
-# Обрезаем от имени файла путь
 def attach_name(in_text):
+    # Truncate path from file name
     return str(in_text).split('/')[-1]

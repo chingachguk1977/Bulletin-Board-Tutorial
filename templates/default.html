@@ -79,9 +79,9 @@
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
                 {% if request.user.is_authenticated %}
-                    <a class="nav-link fw-bolder px-3" href="/accounts/logout/">Выход</a>
+                    <a class="nav-link fw-bolder px-3" href="/accounts/logout/">Logout</a>
                 {% else %}
-                    <a class="nav-link fw-bolder px-3" href="/accounts/login/">Вход</a>
+                    <a class="nav-link fw-bolder px-3" href="/accounts/login/">Login</a>
                 {% endif %}
             </div>
         </div>
@@ -94,23 +94,23 @@
               <ul class="nav flex-column">
                   <li class="nav-item">
                       <a class="nav-link" aria-current="page" href="{% url 'bill_board:advert' %}">
-                          <span class="align-text-bottom">Главная</span>
+                          <span class="align-text-bottom">Home</span>
                       </a>
                   </li>
                   {% if request.user.is_authenticated and request.user.is_staff and is_email_verified %}
                       <li class="nav-item">
                           <a class="nav-link" aria-current="page" href="{% url 'bill_board:create' %}">
-                              <span class="align-text-bottom">Добавить объявление</span>
+                              <span class="align-text-bottom">New Ad</span>
                           </a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'bill_board:user_advert' %}">
-                              <span class="align-text-bottom">Мои объявления</span>
+                              <span class="align-text-bottom">My Ads</span>
                           </a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'bill_board:resp_list' %}">
-                              <span class="align-text-bottom">Отклики</span>
+                              <span class="align-text-bottom">Responses</span>
                           </a>
                       </li>
                   {% endif %}

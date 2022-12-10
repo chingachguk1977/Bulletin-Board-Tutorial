@@ -4,54 +4,54 @@ from django.urls import reverse
 
 
 class Advert(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
-    title = models.CharField(max_length=128, verbose_name='Название объявления')
-    text = models.TextField(verbose_name='Текст объявления')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Author')
+    title = models.CharField(max_length=128, verbose_name='Ad title')
+    text = models.TextField(verbose_name='Ad body')
     CATS = (
-        ('tanks', 'Танки'),
-        ('heals', 'Хилы'),
-        ('dd', 'ДД'),
-        ('traders', 'Торговцы'),
-        ('givers', 'Квестгиверы'),
-        ('smiths', 'Кузнецы'),
-        ('tanners', 'Кожевники'),
-        ('potions', 'Зельевары'),
-        ('spellcasters', 'Мастера заклинаний')
+        ('tanks', 'Tanks'),
+        ('heals', 'Healers'),
+        ('dd', "DD's"),
+        ('traders', 'Traders'),
+        ('givers', 'Quest Givers'),
+        ('smiths', 'Smiths'),
+        ('tanners', 'Tanners'),
+        ('potions', 'Potion Makers'),
+        ('spellcasters', 'Spell Casters')
     )
     category = models.CharField(
-        max_length=12, choices=CATS, default='tanks', verbose_name='Категория'
+        max_length=12, choices=CATS, default='tanks', verbose_name='Category'
     )
-    create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    create = models.DateTimeField(auto_now_add=True, verbose_name='Creation date')
     attach = models.FileField(
-        upload_to='uploads/%Y/%m/%d/', blank=True, null=True, verbose_name='Вложение'
+        upload_to='uploads/%Y/%m/%d/', blank=True, null=True, verbose_name='Attachment'
     )
 
     class Meta:
-        verbose_name = 'Объявление'
-        verbose_name_plural = 'Объявления'
+        verbose_name = 'Advertisement'
+        verbose_name_plural = 'Advertisements'
 
     def get_absolute_url(self):
         return reverse('bill_board:detail', args=[str(self.pk)])
 
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 
 class Resp(models.Model):
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='Пользователь'
+        User, on_delete=models.CASCADE, verbose_name='User'
     )
-    post = models.ForeignKey(Advert, on_delete=models.CASCADE, verbose_name='Объявление')
-    text = models.TextField(verbose_name='Текст отклика')
-    create = models.DateTimeField(auto_now_add=True, verbose_name='Дата отклика')
-    status = models.BooleanField(default=False, verbose_name='Принято')
+    post = models.ForeignKey(Advert, on_delete=models.CASCADE, verbose_name='Advertisement')
+    text = models.TextField(verbose_name='Response body')
+    create = models.DateTimeField(auto_now_add=True, verbose_name='Response Date')
+    status = models.BooleanField(default=False, verbose_name='Accepted')
 
     class Meta:
-        verbose_name = 'Отклик'
-        verbose_name_plural = 'Отклики'
+        verbose_name = 'Response'
+        verbose_name_plural = 'Responses'
 
     def get_absolute_url(self):
         return reverse('bill_board:detail', args=[str(self.post.pk)])
 
     def __str__(self):
-        return self.text[:64]
+        return f'{self.text[:64]}' if len(self.text > 64) else f'{self.text}'

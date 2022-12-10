@@ -5,29 +5,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h5 class="modal-title text-success">Подтвердите свой Email</h5>
+                    <h5 class="modal-title text-success">Confirm Your Email</h5>
                 </div>
                 <div class="modal-body p-5 pt-0">
                     {% if confirmation %}
                         <p>
-                            Подтвердите что
+                            Confirm that
                             <a class="text-decoration-none" href="mailto:{{ confirmation.email_address.email }}">
                                 {{ confirmation.email_address.email }}
                             </a>
-                            является e-mail адресом пользователя <span class="text-primary">{{ confirmation.email_address.user }}</span>
+                            is valid e-mail of <span class="text-primary">{{ confirmation.email_address.user }}</span>
                         </p>
                         <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                             {% csrf_token %}
-                            <button class="w-100 mb-2 btn btn-lg btn-outline-primary" type="submit">Подтвердить</button>
+                            <button class="w-100 mb-2 btn btn-lg btn-outline-primary" type="submit">Confirm</button>
                         </form>
                     {% else %}
                         <p class="text-danger text-center">
-                            Код в ссылке уже недействителен или ошибочный
+                            The confirmation code is invalid or outdated.
                         </p>
                         <p class="text-dark text-center">
-                            Пожалуйста
                             <a class="text-decoration-none" href="{% url 'account_email' %}">
-                                отправьте новый запрос на подтверждение Email
+                                Resend Email Confirmation Request.
                             </a>
                         </p>
                     {% endif %}

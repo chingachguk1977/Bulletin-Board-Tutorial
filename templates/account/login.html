@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
-                    <h5 class="modal-title">Вход или регистрация</h5>
+                    <h5 class="modal-title">Sign-In or Sign-Up</h5>
                 </div>
                 <div class="modal-body p-5 pt-0">
                     <form class="login" method="POST" action="{% url 'account_login' %}">
@@ -17,18 +17,18 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input name="{{ form.password.name }}" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Пароль</label>
+                            <label for="floatingPassword">Password</label>
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg btn-outline-primary" type="submit">Войти</button>
+                        <button class="w-100 mb-2 btn btn-lg btn-outline-primary" type="submit">Log In</button>
                     </form>
                     <p class="px-2 mt-4 text-center">
                         <a class="text-decoration-none" href="{% url 'account_signup' %}">
-                            Или зарегистрируйтесь
+                            or Register
                         </a>
                     </p>
                     <p class="px-2 text-center">
                         <a class="text-decoration-none" href="{% url 'account_reset_password' %}">
-                            Забыли пароль?
+                            Forgot your password?
                         </a>
                     </p>
                 </div>

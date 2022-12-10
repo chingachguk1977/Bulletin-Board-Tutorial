@@ -1,7 +1,7 @@
 {% extends 'default.html' %}
 {% load i18n %}
-{% block title %}Добавление объявления{% endblock %}
-{% block title_page %}Добавление объявления{% endblock %}
+{% block title %}Adding an Advertisement{% endblock %}
+{% block title_page %}Adding an Advertisement{% endblock %}
 {% block content %}
 <div class="container-fluid mb-5">
     <div class="container text-center">
@@ -12,7 +12,7 @@
                     {{ form.media }}
                     {{ form.as_p }}
                 <p class="pt-4">
-                    <input class="form-control btn btn-outline-primary" type="submit" value="{% trans "Добавить" %}">
+                    <input class="form-control btn btn-outline-primary" type="submit" value="{% trans "New Advertisement" %}">
                 </p>
                 </form>
             </div>

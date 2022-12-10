@@ -5,13 +5,12 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Здравствуйте, {{ name }}</p>
-    <p>Ознакомьтесь с новыми объявлениями на сайте:</p>
+    <p>Hello, {{ name }}</p>
+    <p>Please see the new ads on the site:</p>
     <ul>
         {% for advert in adverts %}
             <li><a href="{{ link }}/{{ advert.id }}/">{{ advert.title }}</a></li>
         {% endfor %}
     </ul>
-    <p>Чтобы ознакомиться подробнее - кликните на заголовок объявления</p>
 </body>
 </html>

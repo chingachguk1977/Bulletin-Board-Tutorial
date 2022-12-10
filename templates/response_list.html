@@ -1,17 +1,17 @@
 {% extends 'default.html' %}
-{% block title %}Отклики{% endblock %}
-{% block title_page %}Отклики{% endblock %}
+{% block title %}Responds{% endblock %}
+{% block title_page %}Responds{% endblock %}
 {% block content %}
     <form action="" method="get">
         <div class="input-group px-5">
-            <label class="input-group-text" for="adv">Фильтр откликов</label>
+            <label class="input-group-text" for="adv">Responds Filter</label>
             <select name="adv" class="form-select" id="filter">
-                <option value="0">Выберите объявление...</option>
+                <option value="0">Pick an Ad...</option>
                 {% for option in adverts %}
                     <option value="{{ option.pk }}" {% if adv == option.pk %}selected{% endif %}>{{ option.title }}</option>
                 {% endfor %}
             </select>
-            <button class="btn btn-outline-primary" type="submit">Показать</button>
+            <button class="btn btn-outline-primary" type="submit">Show</button>
         </div>
     </form>
     {% for advert in advert_list %}
@@ -34,15 +34,15 @@
                                         <form action="{% url 'bill_board:resp_status' %}" method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="respId" value="{{ resp.pk }}">
-                                            <button class="btn btn-sm btn-success">Принять</button>
+                                            <button class="btn btn-sm btn-success">Accept</button>
                                         </form>
                                     {% else %}
-                                        <button class="btn btn-sm btn-success disabled">Принято</button>
+                                        <button class="btn btn-sm btn-success disabled">Accepted</button>
                                     {% endif %}
                                     <form action="{% url 'bill_board:resp_delete' %}" method="post">
                                         {% csrf_token %}
                                         <input type="hidden" name="respId" value="{{ resp.pk }}">
-                                        <button class="btn btn-sm btn-danger">Удалить</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </div>
                             </div>

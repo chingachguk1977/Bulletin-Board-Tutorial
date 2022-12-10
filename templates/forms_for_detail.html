@@ -2,19 +2,19 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Удаление объявления</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Deleting the Ad</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-danger">
-                <p>Объявление: "{{ content.title }}" будет удалено.</p>
-                <p>Также будут удалены все отклики к этому объявлению.</p>
+                <p>The following post: "{{ content.title }}" will be deleted.</p>
+                <p>All responds associated with this ad will be also deleted.</p>
             </div>
             <div class="modal-footer">
                 <form action="{% url 'bill_board:delete' content.pk %}" method="post">
                     {% csrf_token %}
-                    <button class="form-control btn btn-outline-danger" type="submit">Удалить</button>
+                    <button class="form-control btn btn-outline-danger" type="submit">Delete</button>
                 </form>
-                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Do Not Delete</button>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="responseModalLabel">Добавление отклика</h5>
+                <h5 class="modal-title" id="responseModalLabel">New Response</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="{% url 'bill_board:add_response' %}">
@@ -34,8 +34,8 @@
                     {{ form.as_p }}
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-primary" type="submit">Добавить</button>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button class="btn btn-outline-primary" type="submit">Add</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Do Not Add</button>
                 </div>
             </form>
         </div>

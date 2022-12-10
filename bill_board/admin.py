@@ -6,7 +6,7 @@ from .models import Advert, Resp
 
 
 class AdvertAdminForm(forms.ModelForm):
-    text = forms.CharField(label='Текст объявления', widget=CKEditorUploadingWidget())
+    text = forms.CharField(label='Advertisement body', widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Advert

@@ -1,7 +1,7 @@
 {% extends 'default.html' %}
 {% load board_filters %}
-{% block title %}Редактирование объявления "{{ form.title.value }}"{% endblock %}
-{% block title_page %}Редактирование объявления "{{ form.title.value }}"{% endblock %}
+{% block title %}Editing Advertisement "{{ form.title.value }}"{% endblock %}
+{% block title_page %}Editing Advertisement "{{ form.title.value }}"{% endblock %}
 {% block content %}
 <div class="container-fluid mb-5">
     <div class="container text-center">
@@ -13,12 +13,12 @@
                     {{ form.as_p }}
                     {% if form.attach.value %}
                         <p>
-                            Загружен файл:
+                            File loaded:
                             <a class="link-primary text-decoration-none" target="_blank" title="{{ form.attach.value|attach_name }}" href="/media/{{ form.attach.value }}">{{ form.attach.value|attach_name }}</a>
                         </p>
                     {% endif %}
                 <p class="pt-4">
-                    <input class="form-control btn btn-outline-primary" type="submit" value="Сохранить">
+                    <input class="form-control btn btn-outline-primary" type="submit" value="Save">
                 </p>
                 </form>
             </div>

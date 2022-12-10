@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import AdvertView, AdvertCreate, AdvertEdit, AdvertDetail, AdvertDelete, RespCreate, \
-    UserAdvert, RespList, resp_change_status, delete_response
+from .views import (AdvertView, AdvertEdit, AdvertDetail, AdvertDelete, AdvertCreate,
+                    UserAdvert, RespList, resp_change_status, delete_response, )
 
 app_name = 'bill_board'
 urlpatterns = [
