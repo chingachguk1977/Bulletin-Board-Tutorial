@@ -83,7 +83,6 @@ class RespList(LoginRequiredMixin, ListView):
     context_object_name = 'responses'
     template_name = 'response_list.html'
     ordering = '-create'
-    paginate_by = 3
 
     def get_queryset(self):
         """

@@ -14,40 +14,50 @@ from kombu.exceptions import OperationalError
 
 
 @shared_task
-def mail_for_add_response(username, email, title):
+def mail_for_add_response(username, email, title, pk):
     """
     Sending email after response added
     """
+    adv = Advert.objects.get(id=pk)
     html_content = render_to_string(
         template_name='email/added_response.html',
         context={
             'name': username,
             'title': title,
+            'link': SITE_LINK,
+            'advert': adv,
             }
     )
 
-    subject = f'{username}, a new response to "{title}" received.'
+    subject = f'{username}, a new response to "{title}" received'
     print(subject)
     try:
         send_mail(email, subject, html_content)
     except OperationalError:
-        print('could not send email')
+        print('could not send e-mail on a new response')
     return
 
 
 @shared_task
-def mail_for_change_status(username, email):
+def mail_for_change_status(username, email, title, pk):
     """
     Sending email after response accepted
     """
+    adv = Advert.objects.get(id=pk)
     html_content = render_to_string(
-        'email/response_accepted.html',
-        {
+        template_name='email/response_accepted.html',
+        context={
             'name': username,
+            'title': title,
+            'link': SITE_LINK,
+            'advert': adv,
         }
     )
     subject = f'{username}, your response has been accepted.'
-    send_mail(email, subject, html_content)
+    try:
+        send_mail(email, subject, html_content)
+    except OperationalError:
+        print('could not send e-mail on response status change')
     return
 
 
@@ -69,15 +79,17 @@ def periodic_mailing():
     # checking if there werwe new ads for the last 24 hrs and sending out e-mails
     the_day = timezone.now() - timedelta(days=1)
     adv = Advert.objects.filter(create__gte=the_day)
-    if adv.exists():
-        for recipient in mailing_list:
-            html_content = render_to_string(
-                'email/daily_mailing.html',
-                {
-                    'link': SITE_LINK,
-                    'name': recipient[0],
-                    'adverts': adv
-                }
-            )
-            subject = f'{recipient[0]}, please see the update for the last 24 hours:'
+    for recipient in mailing_list:
+        html_content = render_to_string(
+            'email/daily_mailing.html',
+            {
+                'link': SITE_LINK,
+                'name': recipient[0],
+                'adverts': adv
+            }
+        )
+        try:
+            subject = f'{recipient[0]}, please see the daily digest:'
             send_mail(recipient[1], subject, html_content)
+        except Exception as e:
+            print(f'could not send daily digest for the following reason(s): {e}')

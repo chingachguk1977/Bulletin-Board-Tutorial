@@ -31,9 +31,9 @@ DEBUG = True
 
 SITE_LINK = 'http://127.0.0.1:8000'
 _ = urlparse(SITE_LINK).netloc
-trunc_port = _.index(':')
+trunc_port = _.find(':')
 ALLOWED_HOSTS = [
-    SITE_LINK[:trunc_port],  # 127.0.0.1
+    _[:trunc_port],  # 127.0.0.1
     ]
 
 # Application definition

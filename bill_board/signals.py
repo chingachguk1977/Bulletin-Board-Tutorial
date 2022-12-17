@@ -28,7 +28,7 @@ def add_response(sender, instance, created, *args, **kwargs):
         adv = get_object_or_404(Advert, pk=instance.post_id)
         try:
             mail_for_add_response.apply_async(
-                (adv.author.username, adv.author.email, adv.title),
+                (adv.author.username, adv.author.email, adv.title, adv.id),
                 countdown=20,
             )
             print(f'title from signals: {adv.title}')
@@ -39,7 +39,7 @@ def add_response(sender, instance, created, *args, **kwargs):
     elif kwargs.get('update_fields'):
         try:
             mail_for_change_status.apply_async(
-                (instance.author.username, instance.author.email),
+                (instance.author.username, instance.author.email, instance.post.title, instance.post.id),
                 countdown=20,
             )
         except OperationalError as e:
