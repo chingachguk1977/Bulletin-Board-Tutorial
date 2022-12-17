@@ -24,7 +24,6 @@ def email_confirmed_(request, email_address, **kwargs):
 @receiver(post_save, sender=Resp)
 def add_response(sender, instance, created, *args, **kwargs):
     # Adding the task to send email on response received
-
     if created:
         adv = get_object_or_404(Advert, pk=instance.post_id)
         try:
@@ -32,10 +31,11 @@ def add_response(sender, instance, created, *args, **kwargs):
                 (adv.author.username, adv.author.email, adv.title),
                 countdown=20,
             )
+            print(f'title from signals: {adv.title}')
         except OperationalError as e:
             print(f'could not send email, this is why: {e}')
-        # Adding the task to send email on response accepted
 
+    # Adding the task to send email on response accepted
     elif kwargs.get('update_fields'):
         try:
             mail_for_change_status.apply_async(
@@ -44,4 +44,4 @@ def add_response(sender, instance, created, *args, **kwargs):
             )
         except OperationalError as e:
             print(f'could not send email, this is why: {e}')
-    # return
+    return

@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from Board.settings import SITE_LINK
 from .utilites import send_mail
-from .models import User, Advert
+from .models import User, Advert, Resp
 
 from kombu.exceptions import OperationalError
 
@@ -19,19 +19,20 @@ def mail_for_add_response(username, email, title):
     Sending email after response added
     """
     html_content = render_to_string(
-        'email/added_response.html',
-        {
+        template_name='email/added_response.html',
+        context={
             'name': username,
             'title': title,
-        }
+            }
     )
 
     subject = f'{username}, a new response to "{title}" received.'
+    print(subject)
     try:
         send_mail(email, subject, html_content)
     except OperationalError:
         print('could not send email')
-    # return
+    return
 
 
 @shared_task
@@ -47,7 +48,7 @@ def mail_for_change_status(username, email):
     )
     subject = f'{username}, your response has been accepted.'
     send_mail(email, subject, html_content)
-    # return
+    return
 
 
 @shared_task
@@ -65,7 +66,7 @@ def periodic_mailing():
         mailing_list.append((username, email))
     mailing_list = list(set(mailing_list))
 
-    # Проверяем наличие объявлений за прошедшие сутки и отправляем письма
+    # checking if there werwe new ads for the last 24 hrs and sending out e-mails
     the_day = timezone.now() - timedelta(days=1)
     adv = Advert.objects.filter(create__gte=the_day)
     if adv.exists():

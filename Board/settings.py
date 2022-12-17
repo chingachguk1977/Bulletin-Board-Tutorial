@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+from urllib.parse import urlparse
 
 # Finding .env file
 load_dotenv(find_dotenv())
@@ -28,8 +29,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
 SITE_LINK = 'http://127.0.0.1:8000'
+_ = urlparse(SITE_LINK).netloc
+trunc_port = _.index(':')
+ALLOWED_HOSTS = [
+    SITE_LINK[:trunc_port],  # 127.0.0.1
+    ]
 
 # Application definition
 

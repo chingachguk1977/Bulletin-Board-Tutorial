@@ -82,7 +82,7 @@ class RespList(LoginRequiredMixin, ListView):
     """Authorized user only"""
     context_object_name = 'responses'
     template_name = 'response_list.html'
-    ordering = '-pk'
+    ordering = '-create'
     paginate_by = 3
 
     def get_queryset(self):
